@@ -63,7 +63,40 @@ $(document).ready(function () {
         })
        
     });
+
     
+    // edit function code
+    function getTaskId() {
+        // Assuming the task ID is stored somewhere in the DOM
+        // We can retrieve it using jQuery
+        var taskId = $('#task-id').val();
+        return taskId;
+    }
+    
+
+    $('#edit-task-btn').click(function() {
+        console.log('clicked')
+        var taskDescription = $('#task-form-display').val();
+        var taskId = getTaskId(); // a function to retrieve the ID of the task to be edited
+        $.ajax({
+            url: '/edit/' + taskId,
+            method: 'PUT',
+            data: {description: taskDescription},
+            success: function(response) {
+                // update the UI to reflect the changes
+                updateTaskList();
+                // close the modal window
+                $('#edit-task-modal').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                // handle errors
+                alert('Error: ' + error);
+            }
+        });
+    });
+      
+
+   
 
    
     
